@@ -8,15 +8,20 @@ class EstatesController < ApplicationController
 
   # GET /estates/1 or /estates/1.json
   def show
+    @estate = Estate.find(params[:id])
+    @stations = @estate.stations
   end
 
   # GET /estates/new
   def new
     @estate = Estate.new
+    2.times {@estate.stations.build}
+  #(!!!!!!!!!!build必要!!!!!!!!!!!!!!!!!)
   end
 
   # GET /estates/1/edit
   def edit
+    @estate.stations.build
   end
 
   # POST /estates or /estates.json
@@ -64,6 +69,6 @@ class EstatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def estate_params
-      params.require(:estate).permit(:name, :price, :adress, :year, :content, stations_attributes: [:walk, :station_name, :station_walk, :estate_id])
+      params.require(:estate).permit(:name, :price, :adress, :year, :content, stations_attributes: [:route, :station_name, :station_walk, :estate_id])
     end
 end
